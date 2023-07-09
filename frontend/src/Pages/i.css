@@ -1,0 +1,43 @@
+.body{
+  overflow-y: scroll;
+}
+.card{
+  /* border: 5px solid black!important; */
+  margin-bottom: 20px;
+}
+.card-body{
+  margin-bottom: 20px;
+}
+.form-label{
+  color: black !important;
+}
+label{
+  display: block!important;
+  text-align: left !important;
+}
+input{
+  text-align: left!important;
+  border: 2px solid black !important;
+}
+input:focus{
+  border: 2px solid rgb(9, 90, 189) !important;
+}
+.text-danger{
+  
+  margin: 0%!important;
+}
+.password-toggle-icon {
+  position: absolute;
+  top: 50%;
+  right: 1.2rem;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+/* input:valid{
+  border: 2px solid rgb(17, 255, 5) !important;
+}
+input:invalid{
+  border: 2px solid rgb(255, 5, 5) !important;
+} */
+
