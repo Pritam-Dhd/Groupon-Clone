@@ -39,3 +39,8 @@ Route::get('/reviews/{id}', [ReviewsController::class, 'getReviews']);
 
 Route::post('/insert-review', [ReviewsController::class, 'insertReview']);
 
+Route::get('/api-deals', [DealsController::class, 'fetchDealsFromApi']);
+
+Route::get('/get-api-deals', [DealsController::class, 'getDealsUsingApi']);
+
+Route::post('/add-api-deals', [DealsController::class, 'addApiDeals']);
