@@ -45,6 +45,9 @@
 .posted{
   font-weight:500;
 }
+.form-body{
+  font-size: 17px!important;
+}
 
 .custom-loader {
   --d: 22px;
