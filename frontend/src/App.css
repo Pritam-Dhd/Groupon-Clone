@@ -48,6 +48,10 @@
 .form-body{
   font-size: 17px!important;
 }
+.message{
+  font-size: 14px!important;
+  margin-bottom: 6px;
+}
 
 .custom-loader {
   --d: 22px;
