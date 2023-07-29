@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DealsController;
 use App\Http\Controllers\ReviewsController;
+use App\Http\Controllers\UsersController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -44,3 +45,7 @@ Route::get('/api-deals', [DealsController::class, 'fetchDealsFromApi']);
 Route::get('/get-api-deals', [DealsController::class, 'getDealsUsingApi']);
 
 Route::post('/add-api-deals', [DealsController::class, 'addApiDeals']);
+
+Route::post('/add-user', [UsersController::class, 'addUser']);
+
+Route::post('/login-user', [UsersController::class, 'loginUser']);

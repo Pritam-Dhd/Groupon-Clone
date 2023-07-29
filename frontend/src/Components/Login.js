@@ -1,14 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import Validation from "./Validation";
 import Header from "./Header";
 import Footer from "./Footer";
+import axios from "axios";
 
 const Login = () => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  const [buttonPressed, setButtonPressed] = useState(false);
   const [errorMessages, setErrorMessages] = useState({
     email: "",
     password: "",
@@ -26,8 +30,41 @@ const Login = () => {
       email: validation.email,
       password: validation.password,
     }));
-    console.log(errorMessages);
+    setButtonPressed(true);
   };
+
+  const fetchUserData = async () => {
+    try {
+      const data = { email: email, password: password };
+      const response = await axios.post("http://localhost:8000/login-user",data);
+      if (response.data.message === "Login successful") {
+        localStorage.setItem("name", response.data.user.name);
+        localStorage.setItem("email", email);
+        localStorage.setItem("password", password);
+        navigate(`/`);
+      } else if (response.data.message === "Incorrect password") {
+        setButtonPressed(false);
+        alert("Incorrect password");
+      } else {
+        alert("Error Logging");
+        setButtonPressed(false);
+      }
+    } catch (error) {
+      console.log(error);
+      setButtonPressed(false);
+    }
+  };
+  useEffect(() => {
+    if (
+      buttonPressed &&
+      errorMessages.email === "" &&
+      errorMessages.password === ""
+    ) {
+      fetchUserData();
+    } else {
+      setButtonPressed(false);
+    }
+  }, [buttonPressed]);
 
   return (
     <>

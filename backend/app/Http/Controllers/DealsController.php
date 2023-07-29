@@ -112,12 +112,12 @@ class DealsController extends Controller
         foreach ($deals as $deal) {
             // Get the category data of the deal and decode it into an associative array
             $categoryData = json_decode($deal['attributes']['category'], true);
-            
             // Check if the deal's category or any of its subcategories match any of the given category names
-            if ($this->hasMatchingCategory($categoryData['Local'], $categoryNames, $categories, $deal)) {
-                // If there's a match, add the deal to the filteredDeals array
-                $filteredDeals[] = $deal;
-            }
+            if (isset($categoryData['Local']) && $this->hasMatchingCategory($categoryData['Local'], $categoryNames, $categories, $deal)) {
+    // If there's a match, add the deal to the filteredDeals array
+    $filteredDeals[] = $deal;
+}
+
         }
 
         // Return the filtered deals
@@ -154,27 +154,39 @@ class DealsController extends Controller
         $request = Request::create('http://localhost:8000/get-api-deals', 'GET');
         $Response = Route::dispatch($request);
         $deals = json_decode($Response->getContent(), true);
-        
+
         foreach ($deals as $deal) {
             $discountPercentArray = json_decode($deal['attributes']['discount_percent_array'], true);
             $discount = $discountPercentArray[0];
-            
+
             $prices = json_decode($deal['attributes']['price_array'], true);
             $price = $prices[0]/100;
 
             $redemptionLocations = json_decode($deal['attributes']['redemption_locations_short'], true);
             $city = $redemptionLocations[0]['city'];
-
-            DB::table('deals')->insert([
-                'category_id' => $deal['category_id'],
-                'deal_name' => $deal['attributes']['gallery_title'],
-                'deal_description' => $deal['attributes']['title_general'],
-                'location' => $city,
-                'image' => $deal['attributes']['med_image'],
-                'deal_price' => $price,
-                'deal_discount' => $discount,
-                'deal_expiry_date' => now()->addDays(30), // Assuming you want to set a default expiry date 30 days from now
-            ]);
+            // Check if the deal already exists in the database based on 'deal_name' and 'location'
+            $existingDeal = DB::table('deals')
+                ->where('deal_name', $deal['attributes']['gallery_title'])
+                ->where('location', $city)
+                ->first();
+            if (!$existingDeal) {
+                $data=DB::table('deals')->insert([
+                    'category_id' => $deal['category_id'],
+                    'deal_name' => $deal['attributes']['gallery_title'],
+                    'deal_description' => $deal['attributes']['title_general'],
+                    'location' => $city,
+                    'image' => $deal['attributes']['med_image'],
+                    'deal_price' => $price,
+                    'deal_discount' => $discount,
+                    'deal_expiry_date' => now()->addDays(30), // Assuming you want to set a default expiry date 30 days from now
+                ]);
+                if ($data) {
+                    echo "Data inserted successfully in deals.";
+                } 
+                else {
+                    echo "Failed to insert deals.";
+                }
+            }
         }
     }
 

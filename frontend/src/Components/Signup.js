@@ -1,14 +1,19 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import axios from "axios";
 import Validation from "./Validation";
 import Header from "./Header";
 import Footer from "./Footer";
 
 const Signup = () => {
+  const navigate = useNavigate();
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  const [buttonPressed, setButtonPressed] = useState(false);
   const [errorMessages, setErrorMessages] = useState({
     email: "",
     password: "",
@@ -26,8 +31,45 @@ const Signup = () => {
       email: validation.email,
       password: validation.password,
     }));
-    console.log(errorMessages);
+    setButtonPressed(true);
   };
+
+  const fetchUserData = async () => {
+    try {
+      const data = { name: name, email: email, password: password };
+      const response = await axios.post("http://localhost:8000/add-user", data);
+      if (response.data.message === "User Created Successfully") {
+        localStorage.setItem("name", name);
+        localStorage.setItem("email", email);
+        localStorage.setItem("password", password);
+        navigate(`/`);
+      } else if (
+        response.data.message === "User with this email already exists."
+      ) {
+        setButtonPressed(false);
+        alert("User Already Exists");
+      } else {
+        alert("Error Adding User");
+        setButtonPressed(false);
+      }
+    } catch (error) {
+      console.log(error);
+      setButtonPressed(false);
+    }
+  };
+
+  useEffect(() => {
+    if (
+      buttonPressed &&
+      errorMessages.email === "" &&
+      errorMessages.password === ""
+    ) {
+      fetchUserData();
+    } else {
+      setButtonPressed(false);
+    }
+  }, [buttonPressed]);
+
   return (
     <>
       <Header />
@@ -47,7 +89,7 @@ const Signup = () => {
                   <h1 className="fs-4 card-title fw-bold mb-2">Register</h1>
                   <form method="POST">
                     <div className="mb-2">
-                      <label className="mb-2 text-muted" for="name">
+                      <label className="mb-2 text-muted" htmlFor="name">
                         Name
                       </label>
                       <input
@@ -56,11 +98,12 @@ const Signup = () => {
                         className="form-control"
                         name="name"
                         required
+                        onChange={(e) => setName(e.target.value)}
                       />
                     </div>
 
                     <div className="mb-2">
-                      <label className="mb-2 text-muted" for="email">
+                      <label className="mb-2 text-muted" htmlFor="email">
                         E-Mail Address
                       </label>
                       <input
@@ -79,7 +122,7 @@ const Signup = () => {
                     )}
 
                     <div className="mb-2">
-                      <label className="mb-2 text-muted" for="password">
+                      <label className="mb-2 text-muted" htmlFor="password">
                         Password
                       </label>
                       <div className="d-flex">
