@@ -1,55 +1,56 @@
-.brand-img{
+.brand-img {
   margin-right: 9px;
 }
-.dropdown-text:hover{
+.dropdown-text:hover {
   color: hsl(0, 0%, 0%);
 }
-.card{
+.card {
   height: 500px;
 }
-.card:hover{
+.card:hover {
   scale: 1.05;
 }
-.deal-img{
+.deal-img {
   width: 100%;
- height: auto;
-  
+  height: auto;
+}
+.discount-deal{
+  font-size: 22px;
 }
 
-.card-body{
+.card-body {
   font-size: 20px;
-  >.deal_name{
+  > .deal_name {
     font-size: 20px;
     font-weight: bold;
   }
-  >.location{
+  > .location {
     font-size: 15px;
   }
-  
 }
-.footer-topic{
+.footer-topic {
   height: 200px;
 }
-.footer-box{
+.footer-box {
   margin-top: 4px;
 }
-.nav-link{
+.nav-link {
   color: whitesmoke !important;
 }
-.help_center{
+.help_center {
   font-size: 20px;
   padding: 7px;
-  border: 2px solid ;
+  border: 2px solid;
   border-radius: 8px !important;
 }
-.posted{
-  font-weight:500;
+.posted {
+  font-weight: 500;
 }
-.form-body{
-  font-size: 17px!important;
+.form-body {
+  font-size: 17px !important;
 }
-.message{
-  font-size: 14px!important;
+.message {
+  font-size: 14px !important;
   margin-bottom: 6px;
 }
 

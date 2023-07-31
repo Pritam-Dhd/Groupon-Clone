@@ -5,6 +5,7 @@ import CategoryDeal from "../Pages/CategoryDeal";
 import Deal from "../Pages/Deal";
 import Login from "./Login";
 import Signup from "./Signup";
+import PageNotFound from "../Pages/PageNotFound";
 
 const Routex = () => {
   return (
@@ -14,8 +15,9 @@ const Routex = () => {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
-          <Route path="/:CategoryId" element={<CategoryDeal />} />
+          <Route path="/category/:CategoryId" element={<CategoryDeal />} />
           <Route path="/deal/:Deal_name" element={<Deal />} />
+          <Route path="*" element={<PageNotFound />} />
         </Routes>
       </BrowserRouter>
     </>

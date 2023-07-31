@@ -65,9 +65,11 @@ const Deal = () => {
                     ${deal.deal_price}{" "}
                   </span>
                   <span className="text-success m-2">
-                    Discount Price: $
-                    {deal.deal_price -
-                      ((deal.deal_discount / 100) * deal.deal_price).toFixed(2)}{" "}
+                    Discount Price: 
+                    <span className="text-black discount-deal">
+                    $ {(deal.deal_price -
+                      ((deal.deal_discount / 100) * deal.deal_price)).toFixed(2)}{" "}
+                    </span>
                   </span>
                   <span className="bg-success text-light m-1 ps-2 pe-2">
                     {deal.deal_discount}% Off

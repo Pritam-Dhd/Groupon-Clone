@@ -42,7 +42,7 @@ const Categoties = () => {
             <button
               className="dropdown-item text-dark"
               onClick={() => {
-                navigate(`/${category.id}`);
+                navigate(`/category/${category.id}`);
               }}
             >
               {category.category_name}
