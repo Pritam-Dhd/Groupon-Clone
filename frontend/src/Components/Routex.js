@@ -6,6 +6,8 @@ import Deal from "../Pages/Deal";
 import Login from "./Login";
 import Signup from "./Signup";
 import PageNotFound from "../Pages/PageNotFound";
+import Profile from "../Pages/Profile";
+import ChangePassword from "../Pages/ChangePassword";
 
 const Routex = () => {
   return (
@@ -17,6 +19,8 @@ const Routex = () => {
           <Route path="/signup" element={<Signup />} />
           <Route path="/category/:CategoryId" element={<CategoryDeal />} />
           <Route path="/deal/:Deal_name" element={<Deal />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/change-password" element={<ChangePassword />} />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
       </BrowserRouter>
